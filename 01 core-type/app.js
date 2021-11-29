@@ -1,5 +1,6 @@
-// tuple
-var role = [1, "author"];
-// 这不是tuple,它时union类型的数组
-// const role2: (string | number)[]
-var role2 = [2, "Book2"];
+var Role;
+(function (Role) {
+    Role["ADMIN"] = "ADMIN";
+    Role[Role["READ_ONLY"] = 100] = "READ_ONLY";
+    Role["AUTHOR"] = "AUTHOR";
+})(Role || (Role = {}));
