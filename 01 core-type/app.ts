@@ -1,8 +1,14 @@
-function addAndHandle(n1: number, n2: number, cb: (result: number) => void) {
-  const result = n1 + n2;
-  cb(result);
-}
+let userInput: unknown;
+let username: string;
 
-addAndHandle(3, 5, (r) => {
-  console.log("Result is " + r);
-});
+userInput = 5;
+// error unknown会做类型检查
+//username = userInput;
+userInput = "静默";
+// 不能将类型“unknown”分配给类型“string”
+//username = userInput;
+
+// 需要用if来做类型推断
+if(typeof userInput === 'string'){
+    username = userInput;
+}

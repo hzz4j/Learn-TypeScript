@@ -1,7 +1,12 @@
-function addAndHandle(n1, n2, cb) {
-    var result = n1 + n2;
-    cb(result);
+var userInput;
+var username;
+userInput = 5;
+// error unknown会做类型检查
+//username = userInput;
+userInput = "静默";
+// 不能将类型“unknown”分配给类型“string”
+//username = userInput;
+// 需要用if来做类型推断
+if (typeof userInput === 'string') {
+    username = userInput;
 }
-addAndHandle(3, 5, function (r) {
-    console.log("Result is " + r);
-});
