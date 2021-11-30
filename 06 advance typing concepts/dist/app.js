@@ -40,3 +40,14 @@ function useVehicle(vehicle) {
 }
 useVehicle(v1);
 useVehicle(v2);
+function moveAnimal(animal) {
+    let speed;
+    switch (animal.type) {
+        case "Bird":
+            speed = animal.flyingSpeed;
+            break;
+        case "Horse":
+            speed = animal.runningSpeed;
+    }
+    console.log("Moving at speed: " + speed);
+}
