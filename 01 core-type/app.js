@@ -1,4 +1,4 @@
 function generateError(msg, code) {
     throw { msg: msg, code: code };
 }
-generateError("Something Error", 500);
+generateError("Something Error1", 500);

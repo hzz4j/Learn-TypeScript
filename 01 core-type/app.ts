@@ -1,5 +1,6 @@
-function generateError(msg: string, code: number) : never{
+
+function generateError(msg: string, code: number): never {
   throw { msg, code };
 }
 
-generateError("Something Error", 500);
+generateError("Something Error1", 500);
