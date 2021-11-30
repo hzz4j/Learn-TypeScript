@@ -1,12 +1,7 @@
-"use strict";
-class Department {
-    constructor(n) {
+var Department = /** @class */ (function () {
+    function Department(id, n) {
+        this.employees = [];
         this.name = n;
     }
-    describe() {
-        console.log("Department: " + this.name);
-    }
-}
-const accounting = new Department("Accounting");
-const accountingCopy = { name: "DUMMY", describe: accounting.describe };
-accountingCopy.describe();
+    return Department;
+}());
