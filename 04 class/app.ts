@@ -1,10 +1,21 @@
 class Department {
-  private employees: string[] = [];
+  constructor(private id: string, private name: string) {}
+}
 
-  constructor(private readonly id: string, private n: string) {}
+class AccountingDepartment extends Department {
+  constructor(id: string, private reports: string[]) {
+    super(id, "Accounting");
+  }
 
-  updateId(){
-      // 不能更新 error
-      //this.id = 'xxx';
+  addReport(report: string) {
+    this.reports.push(report);
+  }
+
+  printReports() {
+    console.log(this.reports);
   }
 }
+
+const accountingDepartment = new AccountingDepartment('idx',[]);
+accountingDepartment.addReport('Something error happen.');
+accountingDepartment.printReports();
