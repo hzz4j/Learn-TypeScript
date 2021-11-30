@@ -1,5 +1,9 @@
 class Department {
+    static fiscalYear = 2021;
   constructor(private id: string, private name: string) {}
+  static createEmployee(name:string){
+      return {name}
+  }
 }
 
 class AccountingDepartment extends Department {

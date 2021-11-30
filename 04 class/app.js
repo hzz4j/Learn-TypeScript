@@ -4,7 +4,11 @@ class Department {
         this.id = id;
         this.name = name;
     }
+    static createEmployee(name) {
+        return { name };
+    }
 }
+Department.fiscalYear = 2021;
 class AccountingDepartment extends Department {
     constructor(id, reports) {
         super(id, "Accounting");
