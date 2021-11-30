@@ -1,12 +1,4 @@
-var userInput;
-var username;
-userInput = 5;
-// error unknown会做类型检查
-//username = userInput;
-userInput = "静默";
-// 不能将类型“unknown”分配给类型“string”
-//username = userInput;
-// 需要用if来做类型推断
-if (typeof userInput === 'string') {
-    username = userInput;
+function generateError(msg, code) {
+    throw { msg: msg, code: code };
 }
+generateError("Something Error", 500);
