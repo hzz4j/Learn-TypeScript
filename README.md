@@ -6,3 +6,13 @@
 
 [TypeScript Learn Notes](https://q10viking.github.io/typescript/)
 
+
+
+## 运行
+
+```sh
+npm install
+npm run start
+tsc -w
+```
+
