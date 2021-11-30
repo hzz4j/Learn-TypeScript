@@ -1,44 +1,15 @@
-class Department {
-    static fiscalYear = 2021;
-  constructor(private id: string, private name: string) {}
-  static createEmployee(name:string){
-      return {name}
-  }
+abstract class Department {
+  constructor(protected id: string, private name: string) {}
+  abstract describe(this: Department): void;
 }
 
-class AccountingDepartment extends Department {
-  private lastReport: string;
-  // getter
-  get mostRecentReport() {
-    if (this.lastReport) {
-      return this.lastReport;
+class ITDepartment extends Department{
+
+    constructor(id:string){
+        super(id,'IT');
     }
-    throw new Error("No report found.");
-  }
-  // setter
-  set mostRecentReport(value: string) {
-    if (!value) {
-      throw new Error("Please pass in a valid value!");
+
+    describe(this: ITDepartment) {
+        console.log('IT Department id - '+this.id);
     }
-    this.addReport(value);
-  }
-
-  constructor(id: string, private reports: string[]) {
-    super(id, "Accounting");
-    this.lastReport = reports[0];
-  }
-
-  addReport(report: string) {
-    this.reports.push(report);
-    this.lastReport = report;
-  }
-
-  printReports() {
-    console.log(this.reports);
-  }
 }
-
-const accountingDepartment = new AccountingDepartment("idx", []);
-accountingDepartment.mostRecentReport = 'Hello Report';
-console.log(accountingDepartment.mostRecentReport);
-
