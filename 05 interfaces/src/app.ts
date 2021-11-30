@@ -1,9 +1,23 @@
-// type AddFn = (number1:number,number2:number)=>number;
-interface AddFn{
-    (number1:number,number2:number):number;
+interface Greetable {
+  readonly name?: string;
+  greet(phrase: string): void;
 }
 
-let add:AddFn;
-add = (number1,number2)=>number1+number2;
+class Person implements Greetable {
+  name?: string;
+  constructor(n?: string) {
+    if (n) {
+      this.name = n;
+    }
+  }
+  greet(phrase: string) {
+    if (this.name) {
+        console.log(phrase+this.name);
+    } else {
+      console.log("Hi!");
+    }
+  }
+}
 
-console.log(add(1,2));
+let user1: Greetable = new Person();
+user1.greet('Hi there,I\'m '); // 输出： Hi!
