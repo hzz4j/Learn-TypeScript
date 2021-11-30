@@ -1,22 +1,9 @@
-interface Greetable {
-  name: string;
-
-  greet(phrase: string): void;
+// type AddFn = (number1:number,number2:number)=>number;
+interface AddFn{
+    (number1:number,number2:number):number;
 }
 
-class Person implements Greetable {
-  name: string;
-  score: number = 100;
+let add:AddFn;
+add = (number1,number2)=>number1+number2;
 
-  constructor(n: string) {
-    this.name = n;
-  }
-
-  greet(phrase:string){
-      console.log(phrase+this.name);
-      
-  }
-}
-
-let user1: Greetable = new Person("静默");
-user1.greet('Hi there,I\'m ');
+console.log(add(1,2));
