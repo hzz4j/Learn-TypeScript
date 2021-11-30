@@ -29,11 +29,16 @@ function addNumbers() {
 }
 console.log(addNumbers(5, 10, 3.7));
 var hobbies = ["Sport", "Reading"];
+var hobby1 = hobbies[0], hobby2 = hobbies[1], remainingHobbies = hobbies.slice(2);
+console.log(hobbies, hobby1, hobby2, remainingHobbies);
 var hobbActivies = __spreadArray([], hobbies, true);
 var person = {
     name: "静默",
     developer: "Java"
 };
+var nameAlias = person.name, developer = person.developer;
 var Q10Viking = __assign({}, person);
-var printOut = function (msg) { return console.log(msg); };
-console.log(printOut('Hello World'));
+var printOut1 = function (msg) { return console.log(msg); };
+var printOut2 = function (msg) { return console.log(msg); };
+console.log(printOut1("Hello World"));
+console.log(printOut2("Hello World"));
