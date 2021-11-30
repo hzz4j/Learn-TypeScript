@@ -10,6 +10,6 @@ function combine(input1, input2, resultConversion) {
     return result;
 }
 var combineMoney1 = combine(100, 300.3, "as-number");
-console.log(combineMoney1);
+console.log(combineMoney1); //  400.3
 var combineMoney2 = combine("100", "300.3", "as-number");
-console.log(combineMoney2);
+console.log(combineMoney2); //  400.3
