@@ -14,6 +14,21 @@ function merge<T, U extends object>(objA: T, objB: U) {
   return Object.assign(objA, objB);
 }
 // error will not work
-const mergedObj = merge({ name: "静默", hobbies: ["Codeing", "Reading"] }, "");
+//const mergedObj = merge({ name: "静默", hobbies: ["Codeing", "Reading"] }, "");
 
-console.log(mergedObj);
+interface Lengthy {
+  length: number;
+}
+
+function countAndDescribe<T extends Lengthy>(element: T) {
+  let descriptionText = "Got no value.";
+  if (element.length === 1) {
+    descriptionText = "Got 1 element.";
+  } else if (element.length > 1) {
+    descriptionText = `Got ${element.length} elements.`;
+  }
+  return [element, descriptionText];
+}
+
+console.log(countAndDescribe(["Coding","Reading"]));
+
