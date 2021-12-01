@@ -36,3 +36,4 @@ Person = __decorate([
 ], Person);
 // step 3只会在实例化的时候才执行
 const person = new Person();
+//# sourceMappingURL=returningAClassWhenAClassDecorator.js.map

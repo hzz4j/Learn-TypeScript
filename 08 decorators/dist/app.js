@@ -5,36 +5,63 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-function AutoBind(target, name, propertyDescriptor) {
-    console.log(propertyDescriptor);
-    const originalMethod = propertyDescriptor.value;
-    // 修改方法的描述
-    const adjDescriptor = {
-        // get是PropertyDescriptor接口的规范
-        get() {
-            console.log("xxx");
-            console.log(this); // 这个例子就是Printer,因为方法绑定了@AutoBind
-            // 给原来的方法绑定了this
-            const boundFn = originalMethod.bind(this); // this是只被调的实例，当然是被修饰的方法
-            return boundFn;
-        },
-    };
-    return adjDescriptor;
+const registeredValidators = {};
+function Require(target, name) {
+    console.log("require");
+    registeredValidators[target.constructor.name] = Object.assign(Object.assign({}, registeredValidators[target.constructor.name]), { [name]: ["require"] });
 }
-class Printer {
-    constructor() {
-        this.msg = "This works!";
+function PositiveNum(target, name) {
+    console.log("PositiveNum");
+    registeredValidators[target.constructor.name] = Object.assign(Object.assign({}, registeredValidators[target.constructor.name]), { [name]: ["positiveNum"] });
+}
+function valid(obj) {
+    const objValidatorConfig = registeredValidators[obj.constructor.name];
+    if (!objValidatorConfig) {
+        return;
     }
-    showMsg() {
-        console.log(this.msg);
+    let isValid = true;
+    console.log(objValidatorConfig);
+    for (const prop in objValidatorConfig) {
+        for (const validator of objValidatorConfig[prop]) {
+            switch (validator) {
+                case "require":
+                    isValid = isValid && !!obj[prop];
+                    break;
+                case "positiveNum":
+                    isValid = isValid && obj[prop] > 0;
+                    break;
+            }
+        }
+    }
+    return isValid;
+}
+//=======================================================
+class Course {
+    constructor(t, p) {
+        this.title = t;
+        this.price = p;
     }
 }
 __decorate([
-    AutoBind
-], Printer.prototype, "showMsg", null);
-const button = document.getElementById("app");
-const p = new Printer();
-// bind 让this指向p
-//button.addEventListener('click',p.showMsg.bind(p));
-// autobind
-button.addEventListener("click", p.showMsg);
+    Require
+], Course.prototype, "title", void 0);
+__decorate([
+    PositiveNum
+], Course.prototype, "price", void 0);
+const form = document.querySelector("form");
+const formButton = form.querySelector("button");
+formButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    const titlEl = form.querySelector("#title");
+    const priceEl = form.querySelector("#price");
+    const title = titlEl.value;
+    const price = +priceEl.value;
+    const createCourse = new Course(title, price);
+    console.log(createCourse);
+    if (!valid(createCourse)) {
+        alert("Invalid input,please try again!");
+        return;
+    }
+    console.log(createCourse);
+});
+//# sourceMappingURL=app.js.map

@@ -1,38 +1,80 @@
-function AutoBind(
-  target: any,
-  name: string,
-  propertyDescriptor: PropertyDescriptor
-): PropertyDescriptor {
-  console.log(propertyDescriptor);
-
-  const originalMethod = propertyDescriptor.value;
-  // 修改方法的描述
-  const adjDescriptor: PropertyDescriptor = {
-    // get是PropertyDescriptor接口的规范
-    get() {
-      console.log("xxx");
-      console.log(this); // 这个例子就是Printer,因为方法绑定了@AutoBind
-      // 给原来的方法绑定了this
-      const boundFn = originalMethod.bind(this); // this是只被调的实例，当然是被修饰的方法
-      return boundFn;
-    },
+//=======================================================
+interface ValidConfig {
+  [properties: string]: {
+    [properties: string]: string[];
   };
-  return adjDescriptor;
+}
+const registeredValidators: ValidConfig = {};
+
+function Require(target: any, name: string) {
+  console.log("require");
+  registeredValidators[target.constructor.name] = {
+    ...registeredValidators[target.constructor.name],
+    [name]: ["require"],
+  };
 }
 
-class Printer {
-  msg = "This works!";
+function PositiveNum(target: any, name: string) {
+  console.log("PositiveNum");
 
-  @AutoBind
-  showMsg() {
-    console.log(this.msg);
+  registeredValidators[target.constructor.name] = {
+    ...registeredValidators[target.constructor.name],
+    [name]: ["positiveNum"],
+  };
+}
+
+function valid(obj: any) {
+  const objValidatorConfig = registeredValidators[obj.constructor.name];
+  if (!objValidatorConfig) {
+    return;
+  }
+  let isValid = true;
+  console.log(objValidatorConfig);
+
+  for (const prop in objValidatorConfig) {
+    for (const validator of objValidatorConfig[prop]) {
+      switch (validator) {
+        case "require":
+          isValid = isValid && !!obj[prop];
+          break;
+        case "positiveNum":
+          isValid = isValid && obj[prop] > 0;
+          break;
+      }
+    }
+  }
+  return isValid;
+}
+//=======================================================
+
+class Course {
+  @Require
+  title: string;
+  @PositiveNum
+  price: number;
+  constructor(t: string, p: number) {
+    this.title = t;
+    this.price = p;
   }
 }
 
-const button = document.getElementById("app")!;
-const p = new Printer();
-// bind 让this指向p
-//button.addEventListener('click',p.showMsg.bind(p));
+const form = document.querySelector("form")!;
+const formButton = form.querySelector("button")!;
 
-// autobind
-button.addEventListener("click", p.showMsg);
+formButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  const titlEl = form.querySelector("#title")! as HTMLInputElement;
+  const priceEl = form.querySelector("#price")! as HTMLInputElement;
+
+  const title = titlEl.value;
+  const price = +priceEl.value;
+
+  const createCourse = new Course(title, price);
+  console.log(createCourse);
+
+  if (!valid(createCourse)) {
+    alert("Invalid input,please try again!");
+    return;
+  }
+  console.log(createCourse);
+});

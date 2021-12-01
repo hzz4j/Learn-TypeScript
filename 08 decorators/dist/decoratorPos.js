@@ -64,3 +64,4 @@ __decorate([
     LogMethod,
     __param(0, LogParameter)
 ], Product.prototype, "getPricewithTax", null);
+//# sourceMappingURL=decoratorPos.js.map
