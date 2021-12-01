@@ -30,5 +30,36 @@ function countAndDescribe<T extends Lengthy>(element: T) {
   return [element, descriptionText];
 }
 
-console.log(countAndDescribe(["Coding","Reading"]));
+console.log(countAndDescribe(["Coding", "Reading"]));
 
+function extractAndConvert<T extends object, U extends keyof T>(
+  obj: T,
+  key: U
+) {
+  return "Value: " + obj[key];
+}
+// error
+// extractAndConvert({ name: "静默" }, "age");
+console.log(extractAndConvert({ name: "静默" }, "name"));
+
+class DataStorage<T extends string | number | boolean> {
+  private data:T[] = [];
+
+  addItem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item:T){
+    const index = this.data.indexOf(item);
+    if(index === -1){
+        return ;
+    }
+    this.data.splice(index,1);
+  }
+
+  getItems(){
+      return [...this.data]
+  }
+}
+
+const textStorage = new DataStorage<string>();

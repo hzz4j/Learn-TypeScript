@@ -22,3 +22,28 @@ function countAndDescribe(element) {
     return [element, descriptionText];
 }
 console.log(countAndDescribe(["Coding", "Reading"]));
+function extractAndConvert(obj, key) {
+    return "Value: " + obj[key];
+}
+// error
+// extractAndConvert({ name: "静默" }, "age");
+console.log(extractAndConvert({ name: "静默" }, "name"));
+class DataStorage {
+    constructor() {
+        this.data = [];
+    }
+    addItem(item) {
+        this.data.push(item);
+    }
+    removeItem(item) {
+        const index = this.data.indexOf(item);
+        if (index === -1) {
+            return;
+        }
+        this.data.splice(index, 1);
+    }
+    getItems() {
+        return [...this.data];
+    }
+}
+const textStorage = new DataStorage();
