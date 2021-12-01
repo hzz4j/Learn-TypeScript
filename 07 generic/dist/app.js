@@ -47,3 +47,14 @@ class DataStorage {
     }
 }
 const textStorage = new DataStorage();
+const cities = ["BeiJing", "GuiLin"];
+function createCourseGoal(name, description, completeUtil) {
+    // Partial的作用Make all properties in T optional
+    //let courseGoal: CourseGoal = {};
+    let courseGoal = {};
+    courseGoal.name = name;
+    courseGoal.description = description;
+    courseGoal.completeUtil = completeUtil;
+    return courseGoal;
+}
+let courseGoal = createCourseGoal("Learn Typescript", "静默Come on", new Date());
