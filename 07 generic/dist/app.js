@@ -9,9 +9,8 @@ promise.then((data) => {
     data.split("");
 });
 function merge(objA, objB) {
-    // return 的类型会推断为 T & U
     return Object.assign(objA, objB);
 }
-// merge<{name: string;hobbies: string[];}, {score: number;}>(参数。..)
-const mergedObj = merge({ name: "静默", hobbies: ["Codeing", "Reading"] }, { score: 100 });
+// error will not work
+const mergedObj = merge({ name: "静默", hobbies: ["Codeing", "Reading"] }, "");
 console.log(mergedObj);
