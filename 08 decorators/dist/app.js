@@ -5,34 +5,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-function withTemplate(template, hookId) {
-    console.log("Step 1");
-    // T extends 一个方法的type,也可以直接写成 T extends new (...args: any[]) => { name: string }
-    return function (originalConstructor) {
-        console.log("Step 2");
-        // 返回一个新的class，该类继承原有的类，做了一些修改
-        return class extends originalConstructor {
-            constructor(..._) {
-                super();
-                console.log("Step 3");
-                const hookEl = document.getElementById(hookId);
-                const p = new originalConstructor();
-                if (hookEl) {
-                    hookEl.innerHTML = template;
-                    hookEl.querySelector("h1").textContent = this.name;
-                }
-            }
-        };
+function AutoBind(target, name, propertyDescriptor) {
+    console.log(propertyDescriptor);
+    const originalMethod = propertyDescriptor.value;
+    // 修改方法的描述
+    const adjDescriptor = {
+        // get是PropertyDescriptor接口的规范
+        get() {
+            console.log("xxx");
+            console.log(this); // 这个例子就是Printer,因为方法绑定了@AutoBind
+            // 给原来的方法绑定了this
+            const boundFn = originalMethod.bind(this); // this是只被调的实例，当然是被修饰的方法
+            return boundFn;
+        },
     };
+    return adjDescriptor;
 }
-// decorator会在类定义的地方执行
-let Person = class Person {
-    constructor(name = "静默") {
-        this.name = name;
+class Printer {
+    constructor() {
+        this.msg = "This works!";
     }
-};
-Person = __decorate([
-    withTemplate("<h1>Hello TypeScript</h1>", "app")
-], Person);
-// step 3只会在实例化的时候才执行
-const person = new Person();
+    showMsg() {
+        console.log(this.msg);
+    }
+}
+__decorate([
+    AutoBind
+], Printer.prototype, "showMsg", null);
+const button = document.getElementById("app");
+const p = new Printer();
+// bind 让this指向p
+//button.addEventListener('click',p.showMsg.bind(p));
+// autobind
+button.addEventListener("click", p.showMsg);
